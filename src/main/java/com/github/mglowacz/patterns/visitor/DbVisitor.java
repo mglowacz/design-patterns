@@ -8,20 +8,16 @@ public class DbVisitor implements Visitor<Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(DbVisitor.class);
 
     @Override
-    public Integer visit(Book book) {
-        LOG.debug("Visiting book");
-        return 1;
-    }
-
-    @Override
-    public Integer visit(Magazine magazine) {
-        LOG.debug("Visiting magazine");
-        return 2;
-    }
-
-    @Override
-    public Integer visit(Cd cd) {
-        LOG.debug("Visiting cd");
-        return 3;
+    public Integer visit(Visitable visitable) {
+        LOG.debug("Visiting {}", visitable.getClass().getSimpleName());
+        if (visitable instanceof Book) {
+            return 1;
+        } else if (visitable instanceof Magazine) {
+            return 2;
+        } else if (visitable instanceof Cd) {
+            return 3;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 }

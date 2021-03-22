@@ -6,6 +6,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 @RunWith(MockitoJUnitRunner.class)
 public class VisitorPatternTest {
 
@@ -16,13 +19,13 @@ public class VisitorPatternTest {
         Visitor<String> printVisitor = new PrintVisitor();
         Visitor<Integer> dbVisitor = new DbVisitor();
 
-        System.out.println(new Book().accept(printVisitor));
-        System.out.println(new Cd().accept(printVisitor));
-        System.out.println(new Magazine().accept(printVisitor));
+        assertTrue(new Book().accept(printVisitor).startsWith(Book.class.getCanonicalName()));
+        assertTrue(new Cd().accept(printVisitor).startsWith(Cd.class.getCanonicalName()));
+        assertTrue(new Magazine().accept(printVisitor).startsWith(Magazine.class.getCanonicalName()));
 
-        System.out.println(new Book().accept(dbVisitor));
-        System.out.println(new Cd().accept(dbVisitor));
-        System.out.println(new Magazine().accept(dbVisitor));
+        assertEquals(1L, new Book().accept(dbVisitor).longValue());
+        assertEquals(2L, new Magazine().accept(dbVisitor).longValue());
+        assertEquals(3L, new Cd().accept(dbVisitor).longValue());
     }
 
 }
